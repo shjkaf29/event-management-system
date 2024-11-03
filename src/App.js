@@ -1,24 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import AdminDashboard from './pages/AdminDashboard';
+import StudentDashboard from './pages/StudentDashboard';
+import EventOrganizerDashboard from './pages/EventOrganizerDashboard';
+import GuestView from './pages/GuestView';
+import LoginPage from './pages/LoginPage';
 
 function App() {
+  const role = "admin"; 
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/admin" element={role === "admin" ? <AdminDashboard /> : <Navigate to="/" />} />
+        <Route path="/student" element={role === "student" ? <StudentDashboard /> : <Navigate to="/" />} />
+        <Route path="/organizer" element={role === "organizer" ? <EventOrganizerDashboard /> : <Navigate to="/" />} />
+        <Route path="/guest" element={<GuestView />} />
+      </Routes>
+    </Router>
   );
 }
 
